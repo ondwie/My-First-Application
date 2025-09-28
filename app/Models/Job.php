@@ -18,4 +18,6 @@ use HasFactory;
 // By convention, Laravel assumes a 'jobs' table.
 // We need to tell it to use our 'job_listings' table instead.
 protected $table = 'job_listings';
+
+protected $guarded = [];
 }

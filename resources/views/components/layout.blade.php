@@ -26,29 +26,37 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="bg-gradient-to-r from-indigo-800 to-purple-800">
-        <div class="mx-auto max-w-7xl py-16 px-6 text-center">
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-                Find Your Dream Job Today
-            </h1>
-            <p class="mt-4 text-lg text-gray-300">
-                Connecting top talent with the best companies 🚀
-            </p>
-            <div class="mt-6">
-                <a href="/jobs" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-lg shadow text-white font-semibold transition">
-                    Browse Jobs
-                </a>
+    <!-- Hero Section: show only on Home + Jobs -->
+    @if(request()->is('/') || request()->is('jobs'))
+        <header class="bg-gradient-to-r from-indigo-800 to-purple-800">
+            <div class="mx-auto max-w-7xl py-16 px-6 text-center">
+                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+                    Find Your Dream Job Today
+                </h1>
+                <p class="mt-4 text-lg text-gray-300">
+                    Connecting top talent with the best companies 🚀
+                </p>
+                <div class="mt-6">
+                    <a href="/jobs" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-lg shadow text-white font-semibold transition">
+                        Browse Jobs
+                    </a>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
+    @endif
 
-    <!-- Main Content -->
+   <!-- Main Content -->
     <main>
         <div class="mx-auto max-w-7xl py-10 px-6">
+            @isset($heading)
+                <h1 class="text-3xl font-bold text-white mb-8">{{ $heading }}</h1>
+            @endisset
+
             {{ $slot }}
         </div>
     </main>
+
+
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 py-6 mt-12 text-center border-t border-gray-800">
@@ -56,4 +64,29 @@
     </footer>
 
 </body>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('delete-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action cannot be undone.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, submit the form
+                    this.submit();
+                }
+            });
+        });
+    </script>
+
+    @include('sweetalert2::index')
+
 </html>
