@@ -7,11 +7,11 @@ return view('home');
 });
 Route::get('/jobs', function () {
 return view('jobs', [
-'jobs' => Job::all()
+'jobs' => \App\Models\Job::with('employer', 'tags')->paginate(5)
 ]);
 });
-Route::get('/jobs/{id}', function ($id) {
+Route::get('/jobs/{job}', function (Job $job) {
 return view('job', [
-'job' => Job::find($id)
+'job' => $job
 ]);
 });
